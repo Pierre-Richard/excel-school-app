@@ -9,7 +9,7 @@ namespace excel_school_app.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        
+
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Class> Class { get; set; }
         public DbSet<ClassSubject> ClassSubject { get; set; }
@@ -21,6 +21,17 @@ namespace excel_school_app.Data
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<User> User { get; set; }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ClassSubject>()
+            .HasKey(cs => new { cs.ClassId, cs.SubjectId });
+
+            modelBuilder.Entity<ParentTeacher>()
+            .HasKey(cs => new { cs.ParentId, cs.TeacherId });
+        }
+
     }
+    
+    
 }
