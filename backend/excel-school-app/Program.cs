@@ -1,5 +1,6 @@
 using System.Text;
 using excel_school_app.Data;
+using excel_school_app.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,6 +33,10 @@ builder.Services.AddAuthentication(options =>
 // Register AppDbContext with PostgreSQL connection string
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Une instance de AuthService est créée par requête HTTP
+// et partagée dans toute la durée de cette requête
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // builder.Build() construit l'application
 var app = builder.Build();
