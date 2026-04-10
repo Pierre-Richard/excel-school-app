@@ -29,6 +29,10 @@ namespace excel_school_app.Data
 
             modelBuilder.Entity<ParentTeacher>()
             .HasKey(cs => new { cs.ParentId, cs.TeacherId });
+
+            modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
         }
 
     }

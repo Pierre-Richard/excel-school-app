@@ -53,9 +53,14 @@ namespace excel_school_app.Controllers
             }
             catch (Exception ex)
             {
-                
+
+                if (ex.Message.Contains("Le password n'existe pas"))
+                {
+                    return Unauthorized();
+                }
                 return BadRequest(ex.Message);
             }
+              
         }
         
     }

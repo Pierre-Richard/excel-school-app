@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddAuthorization();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,9 +39,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Une instance de AuthService est créée par requête HTTP
 // et partagée dans toute la durée de cette requête
 builder.Services.AddScoped<IAuthService, AuthService>();
+// il y a des controllers dans cette application, enregistre-les comme services
+builder.Services.AddControllers();
+
 
 // builder.Build() construit l'application
 var app = builder.Build();
+//mappe les routes HTTP vers les méthodes des controllers
+app.MapControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
