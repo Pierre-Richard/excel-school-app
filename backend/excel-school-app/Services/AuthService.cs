@@ -23,7 +23,7 @@ namespace excel_school_app.Services
             _configuration = configuration;
         }
 
-        private string GenerateToken(RegisterDto user)
+        private string GenerateToken(User user)
         {     
             // 1. Créer les claims
             var claims = new[]
@@ -52,8 +52,49 @@ namespace excel_school_app.Services
         }
 
         public AuthResponseDto Login(LoginDto user)
+
         {
-            throw new NotImplementedException();
+            //Retrouver l'utilisateur par email done
+            //Vérifier que l'utilisateur existe done
+            //Vérifier le mot de passe avec BCrypt.Verify
+            //Générer le token
+            //Retourner un AuthResponseDto
+
+            // retrouver l'utilisateur utilisateur par son email
+            var existantUser = _appDbContext.User.FirstOrDefault(u => u.Email == user.Email);
+            //Vérifier que l'utilisateur existe
+            if (existantUser == null)
+            {
+                throw new Exception("L'utilisateur n'existe pas");
+            }
+
+            //Mot de passe provenant de la DB
+            var passwordFromDB = existantUser.PasswordHash;
+         
+            //Vérifier le mot de passe avec BCrypt.Verify
+            var verifyPassword = BCrypt.Net.BCrypt.Verify(user.Password,passwordFromDB);
+
+            if (verifyPassword != true)
+            {
+                throw new Exception("Le password n'existe pas");
+            }
+
+            var generateToken = GenerateToken(existantUser);
+            
+               //Retourner un AuthResponseDto
+            var authResponseDto = new AuthResponseDto
+            {
+                Id = existantUser.Id,
+                FirstName = existantUser.FirstName,
+                LastName = existantUser.LastName,
+                Email = existantUser.Email,
+                Role = existantUser.Role,
+                Token = generateToken,
+            };
+
+            return authResponseDto;
+
+            
         }
 
         public AuthResponseDto Register(RegisterDto user)
@@ -73,8 +114,10 @@ namespace excel_school_app.Services
             //Créer un nouvel objet User
             var newUser = new User
             {
-                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,   
                 PasswordHash = hashPassword,
+                Email = user.Email,
                 Role = user.Role,
             };
 
@@ -83,7 +126,7 @@ namespace excel_school_app.Services
             _appDbContext.SaveChanges();
 
            //Générer le token JWT
-            var generateToken = GenerateToken(user); 
+            var generateToken = GenerateToken(newUser); 
 
             //Retourner un AuthResponseDto
             var authResponseDto = new AuthResponseDto
