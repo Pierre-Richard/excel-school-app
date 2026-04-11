@@ -24,6 +24,8 @@ namespace excel_school_app.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var passwordHash = "$2a$11$kbyrwUIt/zQBYxL./q5sResUMegZ.Bet2Ug4vbzHYcmRJp.J8GCa";
+            
             modelBuilder.Entity<ClassSubject>()
             .HasKey(cs => new { cs.ClassId, cs.SubjectId });
 
@@ -33,6 +35,21 @@ namespace excel_school_app.Data
             modelBuilder.Entity<User>()
             .HasIndex(u => u.Email)
             .IsUnique();
+
+            modelBuilder.Entity<User>()
+            .HasData(
+                new User
+                {
+                    Id = 2,
+                    FirstName = "Pierre",
+                    LastName = "Mayer",
+                    PasswordHash = passwordHash,
+                    Email = "mayer_alexandre@yahoo.fr",
+                    Role = UserRole.Admin,
+                    CreatedAt = new DateTime(2026, 4, 11, 0, 0, 0, DateTimeKind.Utc)
+
+                }
+            );
         }
 
     }

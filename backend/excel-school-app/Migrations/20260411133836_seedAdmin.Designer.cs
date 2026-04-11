@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using excel_school_app.Data;
@@ -11,9 +12,11 @@ using excel_school_app.Data;
 namespace excel_school_app.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260411133836_seedAdmin")]
+    partial class seedAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,12 +306,12 @@ namespace excel_school_app.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 2,
-                            CreatedAt = new DateTime(2026, 4, 11, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "mayer_alexandre@yahoo.fr",
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 4, 11, 13, 38, 36, 213, DateTimeKind.Utc).AddTicks(5820),
+                            Email = "mayer_mexandre@yahoo.fr",
                             FirstName = "Pierre",
                             LastName = "Mayer",
-                            PasswordHash = "$2a$11$kbyrwUIt/zQBYxL./q5sResUMegZ.Bet2Ug4vbzHYcmRJp.J8GCa",
+                            PasswordHash = "$2a$11$17qbly8BJQOCRnZET.ISyeVWvd.bLAZilNqJLJVKf0F34sOC09Okq",
                             Role = 3
                         });
                 });
