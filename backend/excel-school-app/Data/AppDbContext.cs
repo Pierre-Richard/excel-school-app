@@ -50,6 +50,20 @@ namespace excel_school_app.Data
 
                 }
             );
+
+            modelBuilder.Entity<Student>()
+              .HasOne(s => s.User)   // Student a un User
+              .WithMany()               // User peut avoir plusieurs Students
+              .HasForeignKey(s => s.UserId)
+              .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Student>()
+              .HasOne(s => s.Class)   // Student a une Classe
+              .WithMany()              // Class peut avoir plusieurs Students
+              .HasForeignKey(s => s.ClasseId)
+              .OnDelete(DeleteBehavior.Cascade);
+                
+                
         }
 
     }
