@@ -6,7 +6,7 @@ namespace excel_school_app.Repository
 {
     public interface IStudentRepository
     {
-        IEnumerable<Student> GetAllStudent();
+        IEnumerable<Student> GetAllStudents();
         Student GetStudentById(int id);
         Student CreateStudent(CreateStudentDto student);
         Student UpdateStudent(int id,  UpdateStudentDto student);

@@ -6,7 +6,7 @@ namespace excel_school_app.Services
     public interface IStudentService
     {
         
-        IEnumerable<StudentDto> GetAllStudent();
+        IEnumerable<StudentDto> GetAllStudents();
         StudentDto GetStudentById(int id);
         StudentDto CreateStudent(CreateStudentDto student);
         StudentDto UpdateStudent(int id,  UpdateStudentDto student);

@@ -44,10 +44,10 @@ namespace excel_school_app.Services
 
         }
 
-        public IEnumerable<StudentDto> GetAllStudent()
+        public IEnumerable<StudentDto> GetAllStudents()
         {
             //retourner tous les eleves
-            var students = _studentRepository.GetAllStudent().Select(s =>
+            var students = _studentRepository.GetAllStudents().Select(s =>
             {
                 return new StudentDto
                 {

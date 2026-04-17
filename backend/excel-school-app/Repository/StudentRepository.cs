@@ -53,7 +53,7 @@ namespace excel_school_app.Repository
             _appDbContext.SaveChanges();
         }
 
-        public IEnumerable<Student> GetAllStudent()
+        public IEnumerable<Student> GetAllStudents()
         {
             //recuperer tous les eleves 
             var students = _appDbContext.Student
