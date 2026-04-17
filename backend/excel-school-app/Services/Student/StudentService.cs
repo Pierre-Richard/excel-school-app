@@ -1,6 +1,8 @@
 using System;
+using System.Linq.Expressions;
 using excel_school_app.Data;
 using excel_school_app.DTOs;
+using excel_school_app.Models;
 using excel_school_app.Repository;
 
 namespace excel_school_app.Services
@@ -15,12 +17,31 @@ namespace excel_school_app.Services
         }
         public StudentDto CreateStudent(CreateStudentDto student)
         {
-            throw new NotImplementedException();
+
+            //Appeler le repository qui retourner mon entité student
+            var cretedStudent = _studentRepository.CreateStudent(student);
+
+            // convertir mon student en studentDTO
+            var newStudentDto = new StudentDto
+            {
+                Id = cretedStudent.Id,
+                UserId = cretedStudent.UserId,
+                ClassName = cretedStudent.Class?.Name!,
+                ParentName = cretedStudent.Parent?.Name!,
+                Name = cretedStudent.Name,
+                Firstname = cretedStudent.Firstname,
+                StudentNumber = cretedStudent.StudentNumber,
+                BirthDate = cretedStudent.BirthDate
+            };
+            // retourner mon StudentS
+            return newStudentDto;
         }
 
         public void DeleteStudent(int id)
         {
-            throw new NotImplementedException();
+            //Recuperer le repository
+            _studentRepository.DeleteStudent(id);
+
         }
 
         public IEnumerable<StudentDto> GetAllStudent()
@@ -47,12 +68,44 @@ namespace excel_school_app.Services
 
         public StudentDto GetStudentById(int id)
         {
-            throw new NotImplementedException();
+            //Appeler mon repository qui retourner mon entité Student
+            var student = _studentRepository.GetStudentById(id);
+
+            //Convertir mon student en studentDTO
+            var studentDto = new StudentDto
+            {
+                Id = student.Id,
+                UserId = student.UserId,
+                ClassName = student.Class?.Name!,
+                ParentName = student.Parent?.Name!,
+                Name = student.Name,
+                Firstname = student.Firstname,
+                StudentNumber = student.StudentNumber,
+                BirthDate = student.BirthDate
+            };
+            //Retourner StudentDto
+            return studentDto;
         }
 
         public StudentDto UpdateStudent(int id, UpdateStudentDto student)
         {
-            throw new NotImplementedException();
+            //Recuperer le repository qui va me retourner mon entité Student
+            var newStudent = _studentRepository.UpdateStudent(id, student);
+
+            //Convertir mon student en StudentDto
+            var studentDto = new StudentDto
+            {
+                Id = newStudent.Id,
+                UserId = newStudent.UserId,
+                ClassName = newStudent.Class?.Name!,
+                ParentName = newStudent.Parent?.Name!,
+                Name = newStudent.Name,
+                Firstname = newStudent.Firstname,
+                StudentNumber = newStudent.StudentNumber,
+                BirthDate = newStudent.BirthDate
+            };
+            // retourner StudentDto
+            return studentDto;
         }
     }
 }

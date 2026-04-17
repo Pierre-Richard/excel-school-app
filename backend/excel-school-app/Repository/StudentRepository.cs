@@ -30,7 +30,8 @@ namespace excel_school_app.Repository
                 BirthDate = student.BirthDate,
             };
             //ajouter un eleve dans le tableau student
-             _appDbContext.Student.Add(createNewStudentDto);
+             _appDbContext.Student
+             .Add(createNewStudentDto);
             // sauvegarder l'eleve en base de donnée
             _appDbContext.SaveChanges();
             // retourner un eleve
