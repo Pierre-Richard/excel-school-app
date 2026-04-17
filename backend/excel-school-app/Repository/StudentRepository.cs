@@ -1,10 +1,9 @@
 using System;
-using System.Reflection.Metadata.Ecma335;
 using excel_school_app.Data;
 using excel_school_app.DTOs;
 using excel_school_app.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32.SafeHandles;
+
 
 namespace excel_school_app.Repository
 {
@@ -56,7 +55,10 @@ namespace excel_school_app.Repository
         public IEnumerable<Student> GetAllStudent()
         {
             //recuperer tous les eleves 
-            var students = _appDbContext.Student.ToList();
+            var students = _appDbContext.Student
+            .Include(s => s.Class) // Quand tu récupères les Students, charge aussi les données liées.
+            .Include(s => s.Parent)
+            .ToList();
             // retourner tous les eleves
             return students;
         }
