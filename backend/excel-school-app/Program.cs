@@ -1,5 +1,6 @@
 using System.Text;
 using excel_school_app.Data;
+using excel_school_app.Repository;
 using excel_school_app.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Une instance de AuthService est créée par requête HTTP
 // et partagée dans toute la durée de cette requête
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 // il y a des controllers dans cette application, enregistre-les comme services
 builder.Services.AddControllers();
 
