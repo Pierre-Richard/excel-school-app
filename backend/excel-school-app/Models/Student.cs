@@ -11,7 +11,7 @@ namespace excel_school_app.Models
           public string Name { get; set; } = string.Empty;
           public string Firstname { get; set; } = string.Empty; 
           public int StudentNumber { get; set; }
-          public DateTime BirthDate { get; set; } 
+          public DateOnly BirthDate { get; set; } 
           
           // Navigation property indique les relations entre models
           public Class? Class { get; set; }
