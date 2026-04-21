@@ -63,6 +63,27 @@ namespace excel_school_app.Data
               .WithMany()              // Class peut avoir plusieurs Students
               .HasForeignKey(s => s.ClasseId)
               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Grade>()
+              .HasOne(s => s.Student)   // Une note appartient à 1 student
+              .WithMany()              // Un student peut avoir plusieurs notes
+              .HasForeignKey(s => s.StudentId)
+              .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Grade>()
+              .HasOne(s => s.Teacher)   // Un prof appartient à 1 student
+              .WithMany()              // Un prof peut avoir plusieurs notes
+              .HasForeignKey(s => s.TeacherId)
+              .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Grade>()
+              .ToTable(t =>
+                t.HasCheckConstraint(
+                    "CK_Grade_Value","Value >= 0 AND Value <= 20"
+                )
+              );
+              
+
                 
                 
         }
