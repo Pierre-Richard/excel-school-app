@@ -21,6 +21,7 @@ namespace excel_school_app.Data
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Grade> Grade { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +46,7 @@ namespace excel_school_app.Data
                     LastName = "Mayer",
                     PasswordHash = passwordHash,
                     Email = "mayer_alexandre@yahoo.fr",
-                    Role = UserRole.Admin,
+                    Role = Enums.UserRole.Admin,
                     CreatedAt = new DateTime(2026, 4, 11, 0, 0, 0, DateTimeKind.Utc)
 
                 }

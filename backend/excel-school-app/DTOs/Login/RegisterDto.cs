@@ -9,7 +9,7 @@ namespace excel_school_app.DTOs
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public  UserRole Role  { get; set; } 
+        public  Enums.UserRole Role  { get; set; } 
         
     }
 }
