@@ -79,7 +79,7 @@ namespace excel_school_app.Data
             modelBuilder.Entity<Grade>()
               .ToTable(t =>
                 t.HasCheckConstraint(
-                    "CK_Grade_Value","Value >= 0 AND Value <= 20"
+                   "CK_Grade_Value", "\"Value\" >= 0 AND \"Value\" <= 20"
                 )
               );
               
