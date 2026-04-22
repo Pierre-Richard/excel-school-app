@@ -85,9 +85,8 @@ namespace excel_school_app.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-         
-         public IActionResult GetGradeById(int id)
+        [HttpGet("{id:int}")]
+        public IActionResult GetGradeById(int id)
         {
             try
             {
@@ -96,7 +95,50 @@ namespace excel_school_app.Controllers
             }
             catch (Exception ex)
             {
-                 return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+       [HttpGet("student/{studentId}")]
+         public IActionResult GetGradesByStudentId(int studentId)
+        {
+            try
+            {
+                var listGradeStudent = _gradeService.GetGradesByStudentId(studentId);
+                return Ok(listGradeStudent);
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
+        }
+       [HttpGet("student/{studentId}/average")]
+         public IActionResult GetAverageByStudentId(int studentId)
+        {
+            try
+            {
+                var listAverageStudent = _gradeService.GetAverageByStudentId(studentId);
+                return Ok(listAverageStudent);
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
+        }
+       [HttpGet("filter")]
+         public IActionResult GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term)
+        {
+            try
+            {
+                var filteredGradesStudent = _gradeService.GetFilteredGrades(studentId,subject,term);
+                return Ok(filteredGradesStudent);
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
             }
         }
 

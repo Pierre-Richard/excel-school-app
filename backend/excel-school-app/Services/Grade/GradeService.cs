@@ -1,5 +1,6 @@
 using System;
 using excel_school_app.DTOs.Grade;
+using excel_school_app.Enums;
 using excel_school_app.Repository;
 
 namespace excel_school_app.Services.Grade
@@ -58,6 +59,52 @@ namespace excel_school_app.Services.Grade
             return grades;
         }
 
+        public AverageDto GetAverageByStudentId(int studentId)
+        {
+            var listGradeOfStudent = _gradeRepository.GetAverageByStudentId(studentId);
+            var average = listGradeOfStudent.Average(v => v.Value);
+
+            var averageBySubject = listGradeOfStudent.GroupBy(v => v.Subject).Select(a =>
+            {
+                return new SubjectAverageDto
+                {
+                    Subject = a.Key,
+                    Average = a.Average(g => g.Value)
+                };
+            });
+
+            var newAverageDto = new AverageDto
+            {
+                StudentId = studentId,
+                GeneralAverage = average,
+                AverageBySubject = averageBySubject.ToList()
+            };
+
+            return newAverageDto;
+            
+        }
+
+        public IEnumerable<GradeDto> GetFilteredGrades(int? studentId, Subject? subject, Term? term)
+        {
+            var filteredListGrades = _gradeRepository.GetFilteredGrades(studentId, subject, term).Select(g =>
+            {
+                return new GradeDto
+                {
+                    Id = g.Id,
+                    StudentId = g.StudentId,
+                    TeacherId = g.TeacherId,
+                    Subject = g.Subject,
+                    Value = g.Value,
+                    Appreciation = g.Appreciation,
+                    ExamDate = g.ExamDate,
+                    Term = g.Term
+                };
+            });
+
+            return filteredListGrades;
+            
+        }
+
         public GradeDto GetGradeById(int id)
         {
             var grade = _gradeRepository.GetGradeById(id);
@@ -74,6 +121,27 @@ namespace excel_school_app.Services.Grade
             };
 
             return newGrade;
+        }
+
+        public IEnumerable<GradeDto> GetGradesByStudentId(int studentId)
+        {
+            var listeGradeStudent = _gradeRepository.GetGradesByStudentId(studentId).Select(g =>
+            {
+                return new GradeDto
+                {
+                    Id = g.Id,
+                    StudentId = g.StudentId,
+                    TeacherId = g.TeacherId,
+                    Subject = g.Subject,
+                    Value = g.Value,
+                    Appreciation = g.Appreciation,
+                    ExamDate = g.ExamDate,
+                    Term = g.Term
+                };
+            });
+
+            return listeGradeStudent;
+          
         }
 
         public GradeDto UpdateGrade(int id, UpdateGradeDto grade)
@@ -94,5 +162,6 @@ namespace excel_school_app.Services.Grade
 
             return updateGrade;
         }
+
     }
 }
