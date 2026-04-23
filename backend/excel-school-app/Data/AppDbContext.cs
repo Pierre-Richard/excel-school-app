@@ -22,6 +22,7 @@ namespace excel_school_app.Data
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Grade> Grade { get; set; }
+        public DbSet<Absence> Absence { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,12 +59,6 @@ namespace excel_school_app.Data
               .HasForeignKey(s => s.UserId)
               .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Student>()
-              .HasOne(s => s.Class)   // Student a une Classe
-              .WithMany()              // Class peut avoir plusieurs Students
-              .HasForeignKey(s => s.ClasseId)
-              .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<Grade>()
               .HasOne(s => s.Student)   // Une note appartient à 1 student
               .WithMany()              // Un student peut avoir plusieurs notes
@@ -83,7 +78,11 @@ namespace excel_school_app.Data
                 )
               );
               
-
+             modelBuilder.Entity<Absence>()
+              .HasOne(s => s.Student)   // Une absence appartient à 1 student
+              .WithMany()              // Un eleve peut avoir plusieurs absence
+              .HasForeignKey(s => s.StudentId)
+              .OnDelete(DeleteBehavior.Cascade);
                 
                 
         }
