@@ -1,0 +1,17 @@
+using System;
+
+namespace excel_school_app.DTOs.absence
+{
+    public class AbsenceDto
+    {
+         public int Id { get; set; }
+         public int StudentId { get; set; }
+         public DateOnly Date { get; set; }
+         public DateTime StartTime { get; set; }
+         public DateTime EndTime { get; set; }
+         public string Reason { get; set; } = string.Empty;
+         public Enums.AbsenceStatus Status { get; set; } 
+         public bool IsFullDay { get; set; }
+         public DateTime CreatedAt { get; set; }
+    }
+}
