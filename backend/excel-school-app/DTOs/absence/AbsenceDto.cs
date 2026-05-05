@@ -13,5 +13,6 @@ namespace excel_school_app.DTOs.absence
          public Enums.AbsenceStatus Status { get; set; } 
          public bool IsFullDay { get; set; }
          public DateTime CreatedAt { get; set; }
+         public string AlertMessage { get; set; } = string.Empty;
     }
 }
