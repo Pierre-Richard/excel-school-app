@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("excel-school-app")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+478285c87dd35e5a7ba00a62d4d6cf6ba35f1014")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+058104daa230bbb16eac6e65461370143ec6959a")]
 [assembly: System.Reflection.AssemblyProductAttribute("excel-school-app")]
 [assembly: System.Reflection.AssemblyTitleAttribute("excel-school-app")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

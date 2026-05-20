@@ -1,0 +1,79 @@
+.left-panel {
+  padding: 60px;
+  background: linear-gradient(135deg, #1a3a9c 0%, #2a52be 40%, #4ecdc4 100%);
+}
+
+.brand {
+  margin-bottom: 295px;
+}
+
+.brand-logo {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid #ffffff33;
+  border-radius: 18px;
+}
+
+.brand-name {
+  letter-spacing: -1;
+}
+
+.brand-paragraphe {
+  text-align: center;
+  color: rgb(255 255 255 / 75%);
+  line-height: 1.6;
+}
+
+.right-panel {
+}
+
+.auth-box {
+  max-width: 420px;
+  //background-color: yellow;
+}
+
+.auth-tab {
+  height: 50px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #f7f8fc;
+  color: #5a6478;
+}
+
+.active {
+  background-color: #ffffff;
+  color: #2a52be;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.auth-tab-connexion {
+  width: 50%;
+  border-radius: 8px;
+}
+
+.auth-tab-inscription {
+  width: 50%;
+  border-radius: 8px;
+}
+
+::ng-deep .p-ripple.p-button.p-component {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 12.5rem;
+  height: 4rem;
+  background: #2a52be;
+}
+
+.btn {
+  width: 420px;
+}
+
+::ng-deep .button .p-ripple.p-button.p-component {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  background-color: #2a52be;
+}

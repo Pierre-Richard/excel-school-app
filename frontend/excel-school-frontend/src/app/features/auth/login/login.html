@@ -1,0 +1,84 @@
+<div class="container flex">
+  <div class="left-panel w-6 flex flex-column justify-content-center align-items-center">
+    <div class="brand flex flex-column justify-content-center align-items-center">
+      <div class="brand-logo flex justify-content-center align-items-center">
+        <svg viewBox="0 0 24 24" fill="white" width="30" height="30">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+      </div>
+      <div class="brand-name text-4xl text-white font-bold mt-3">Excel</div>
+      <div class="brand-paragraphe mt-2">
+        <p>
+          La plateforme de gestion scolaire moderne<br />
+          pour toute l'équipe éducative.
+        </p>
+      </div>
+    </div>
+    <div class="features"></div>
+  </div>
+  <div class="right-panel w-6 flex justify-content-center align-items-center">
+    <div class="auth-box w-full">
+      <form>
+        <div class="auth-tab flex mb-5">
+          <div
+            class="active auth-tab-connexion flex justify-content-center align-items-center font-semibold"
+          >
+            Connexion
+          </div>
+          <div
+            class="auth-tab-inscription flex justify-content-center align-items-center font-semibold"
+          >
+            Inscription
+          </div>
+        </div>
+        <div class="mb-2 text-base">
+          <h1>Bon retour</h1>
+        </div>
+        <div class="mb-4 text-gray-700">Connectez-vous à votre espace personnel</div>
+        <div class="text-sm font-semibold">
+          <span style="color: #5a6478">Vous êtes...</span>
+        </div>
+        <div class="flex flex-column mb-3">
+          <div class="flex gap-2 mb-2">
+            <p-button icon="pi pi-th-large" aria-label="Admin" label="Admin" />
+            <p-button icon="pi pi-user" aria-label="Professeur" label="Professeur" />
+          </div>
+
+          <div class="flex gap-2">
+            <p-button icon="pi pi-book" aria-label="Eleve" label="Élève" />
+            <p-button icon="pi pi-heart" aria-label="Parent" label="Parent" />
+          </div>
+        </div>
+        <div class="form-group font-semibold text-sm mb-3">
+          <div class="mb-2" style="color: #5a6478" id="email">Adresse email</div>
+          <input class="w-full" type="text" pInputText id="email" />
+        </div>
+        <div class="form-group font-semibold text-sm mb-2">
+          <div class="mb-2" style="color: #5a6478" id="password">Mot de passe</div>
+          <p-password
+            styleClass="w-full"
+            [inputStyle]="{ width: '100%' }"
+            [toggleMask]="true"
+            autocomplete="off"
+          />
+        </div>
+        <div class="flex justify-content-between align-items-center mt-4">
+          <div class="flex gap-2 text-sm">
+            <p-checkbox [binary]="true" />
+            <label>Se souvenir de moi</label>
+          </div>
+          <span class="text-sm" style="color: #2a52be">Mot de passe oublié ? </span>
+        </div>
+        <div class="btn mt-5">
+          <p-button class="button" label="Se connecter" icon="pi pi-arrow-right" iconPos="right" />
+        </div>
+      </form>
+      <div class="text-gray-700 text-xs mt-5 flex justify-content-center">
+        <div class="text-sm">
+          Pas encore de compte ?
+          <span class="font-semibold text-sm" style="color: #2a52be">Créer un compte</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
