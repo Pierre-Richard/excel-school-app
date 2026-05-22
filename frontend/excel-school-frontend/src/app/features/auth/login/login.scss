@@ -89,6 +89,12 @@
   width: 420px;
 }
 
+.btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(42, 82, 190, 0.3);
+}
+
 ::ng-deep .button .p-ripple.p-button.p-component {
   width: 100%;
   height: 3rem;

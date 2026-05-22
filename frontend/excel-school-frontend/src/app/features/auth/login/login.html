@@ -31,7 +31,7 @@
   </div>
   <div class="right-panel w-6 flex justify-content-center align-items-center">
     <div class="auth-box w-full">
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="auth-tab flex mb-5">
           <div
             class="active auth-tab-connexion flex justify-content-center align-items-center font-semibold"
@@ -64,7 +64,7 @@
         </div>
         <div class="form-group font-semibold text-sm mb-3">
           <div class="mb-2" style="color: #5a6478" id="email">Adresse email</div>
-          <input class="w-full" type="text" pInputText id="email" />
+          <input class="w-full" type="text" pInputText id="email" formControlName="email" />
         </div>
         <div class="form-group font-semibold text-sm mb-2">
           <div class="mb-2" style="color: #5a6478" id="password">Mot de passe</div>
@@ -73,6 +73,7 @@
             [inputStyle]="{ width: '100%' }"
             [toggleMask]="true"
             autocomplete="off"
+            formControlName="password"
           />
         </div>
         <div class="flex justify-content-between align-items-center mt-4">
@@ -83,7 +84,13 @@
           <span class="text-sm" style="color: #2a52be">Mot de passe oublié ? </span>
         </div>
         <div class="btn mt-5">
-          <p-button class="button" label="Se connecter" icon="pi pi-arrow-right" iconPos="right" />
+          <p-button
+            class="button"
+            label="Se connecter"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            type="submit"
+          />
         </div>
       </form>
       <div class="text-gray-700 text-xs mt-5 flex justify-content-center">
