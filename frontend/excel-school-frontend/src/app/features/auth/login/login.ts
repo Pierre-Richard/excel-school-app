@@ -39,6 +39,7 @@ export class Login {
           next: (user) => {
             localStorage.setItem('token', user.token);
             localStorage.setItem('role', user.role);
+            localStorage.setItem('user', user.firstName);
             this.router.navigate(['/dashboard']);
           },
           //Si erreur → pour le moment faire un console.log

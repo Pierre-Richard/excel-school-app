@@ -45,4 +45,10 @@ export class AuthService {
     // je retourne le role
     return role;
   }
+  getUser(): string | null {
+    // je recois les roles de utilisateur
+    let user = localStorage.getItem('user');
+    // je retourne le role
+    return user;
+  }
 }

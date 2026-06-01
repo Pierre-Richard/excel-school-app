@@ -34,11 +34,9 @@
   color: #9ba3b5;
 }
 
-.communication {
-  background-color: greenyellow;
-  width: 100%;
+::ng-deep a {
+  text-decoration: none;
 }
-
 ::ng-deep .p-ripple.p-button.p-component {
   display: flex;
   justify-content: flex-start;
@@ -55,8 +53,27 @@
     background-color: #f0f2fa;
     color: #5a6478;
   }
-  &:active {
-    color: #2a52be;
-    border-color: #2a52be;
-  }
+}
+
+::ng-deep a.active .p-ripple.p-button.p-component {
+  color: #2a52be;
+}
+.nav_section {
+  width: 100%;
+}
+
+.nav_label {
+  text-transform: uppercase;
+  color: #9ba3b5;
+}
+.avatar {
+  width: 100%;
+  margin-top: auto;
+  height: 100px;
+}
+
+.role {
+  border-radius: 10px;
+  color: #2a52be;
+  background-color: #f0f2fa;
 }
