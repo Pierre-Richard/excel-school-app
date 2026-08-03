@@ -1,1 +1,76 @@
-<p>students-list works!</p>
+<p-button (click)="showDialog()" label="Ajouter un eleve " />
+<p-dialog
+  header="Ajouter un élève"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '30rem' }"
+>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <span class="p-text-secondary block mb-8">Remplissez les informations de l'élève.</span>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="firstname" class="font-semibold w-36">Prénom</label>
+      <input
+        pInputText
+        id="firstname"
+        class="flex-auto"
+        autocomplete="off"
+        formControlName="firstname"
+      />
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="name" class="font-semibold w-36">Nom</label>
+      <input pInputText id="name" class="flex-auto" autocomplete="off" formControlName="name" />
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="studentNumber" class="font-semibold w-36">Numéro étudiant</label>
+      <input
+        pInputText
+        id="studentNumber"
+        type="number"
+        class="flex-auto"
+        autocomplete="off"
+        formControlName="studentNumber"
+      />
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="className" class="font-semibold w-36">Classe</label>
+      <input
+        pInputText
+        id="className"
+        class="flex-auto"
+        autocomplete="off"
+        formControlName="className"
+      />
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="parentName" class="font-semibold w-36">Nom du parent</label>
+      <input
+        pInputText
+        id="parentName"
+        class="flex-auto"
+        autocomplete="off"
+        formControlName="parentName"
+      />
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label for="birthDate" class="font-semibold w-36">Date de naissance</label>
+      <input pInputText id="birthDate" type="date" class="flex-auto" formControlName="birthDate" />
+    </div>
+    <div class="flex justify-end gap-2">
+      <p-button label="Annuler" severity="secondary" (click)="visible.set(false)" />
+      <p-button type="submit" label="Enregistrer" />
+    </div>
+  </form>
+</p-dialog>
+<div class="container-student flex flex-wrap gap-3 mb-4 p-4">
+  @for (student of students(); track student.id) {
+    <p-card class="w-5" [header]="student.firstname + ' ' + student.name">
+      <div class="flex flex-column gap-2">
+        <span><strong>Classe :</strong> {{ student.className }}</span>
+        <span
+          ><strong>Date de naissance :</strong> {{ student.birthDate | date: 'dd/MM/yyyy' }}</span
+        >
+      </div>
+    </p-card>
+  }
+</div>
