@@ -1,0 +1,8 @@
+# Build .NET
+bin/
+obj/
+*.user
+*.suo
+
+# macOS
+.DS_Store
