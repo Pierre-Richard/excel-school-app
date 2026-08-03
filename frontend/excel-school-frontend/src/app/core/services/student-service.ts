@@ -9,13 +9,10 @@ import { Observable, tap } from 'rxjs';
 })
 export class StudentService {
   private http = inject(HttpClient);
-  private students = signal<Student[]>([]);
 
   public getAllStudents(): Observable<Student[]> {
     //retourner la liste des élèves
-    return this.http
-      .get<Student[]>(`${environment.API_URL}/student`)
-      .pipe(tap((s) => this.students.set(s)));
+    return this.http.get<Student[]>(`${environment.API_URL}/student`);
   }
 
   public getStudentById(id: number) {
@@ -28,9 +25,6 @@ export class StudentService {
   }
 
   public updateStudent(id: number, student: Student) {
-    //trouver utiliser via son id
-    // mise à jour de l'eleve
-    // retourner la nouvelle valeur
     return this.http.put<Student>(`${environment.API_URL}/student/${id}`, student);
   }
 
