@@ -5,6 +5,7 @@ using excel_school_app.Repository.absence;
 using excel_school_app.Services;
 using excel_school_app.Services.absence;
 using excel_school_app.Services.Grade;
+using excel_school_app.Services.Parents;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -57,6 +58,9 @@ builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IAbsenceRepository, AbsenceRepository>();
 builder.Services.AddScoped<IAbsenceService, AbsenceService>();
+builder.Services.AddScoped<IParentRepository, ParentRepository>();
+builder.Services.AddScoped<IParentService, ParentService>();
+
 
 // il y a des controllers dans cette application, enregistre-les comme services
 builder.Services.AddControllers();
