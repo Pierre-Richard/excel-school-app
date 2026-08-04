@@ -22,7 +22,7 @@ namespace excel_school_app.Repository
             var createNewStudentDto = new Student
             {
                 UserId = student.UserId,
-                ClasseId = student.ClasseId,
+                ClassId = student.ClassId,
                 ParentId = student.ParentId,
                 Name = student.Name,
                 Firstname = student.Firstname,
@@ -92,7 +92,7 @@ namespace excel_school_app.Repository
             }
             //mise à jour de l'eleve
             studentFound.UserId = student.UserId;
-            studentFound.ClasseId = student.ClasseId;
+            studentFound.ClassId = student.ClassId;
             studentFound.ParentId = student.ParentId;
             studentFound.Name = student.Name;
             studentFound.Firstname = student.Firstname;
