@@ -43,13 +43,12 @@
       />
     </div>
     <div class="flex items-center gap-4 mb-4">
-      <label for="parentName" class="font-semibold w-36">Nom du parent</label>
-      <input
-        pInputText
-        id="parentName"
-        class="flex-auto"
-        autocomplete="off"
-        formControlName="parentName"
+      <label for="parentId" class="font-semibold w-36">Nom du parent</label>
+      <p-select
+        [options]="parentFiltered()"
+        formControlName="parentId"
+        optionLabel="fullname"
+        optionValue="id"
       />
     </div>
     <div class="flex items-center gap-4 mb-8">
