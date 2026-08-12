@@ -3,6 +3,7 @@ import { Dashboard } from './features/dashboard/dashboard';
 import { Login } from './features/auth/login/login';
 import { StudentsList } from './features/students/students-list/students-list';
 import { MainLayout } from './shared/main-layout/main-layout';
+import { StudentProfil } from './features/students/student-profil/student-profil';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -11,7 +12,7 @@ export const routes: Routes = [
     component: MainLayout,
     children: [
       { path: 'dashboard', component: Dashboard, data: { role: 'admin' } },
-      { path: 'students', component: StudentsList },
+      { path: 'students', component: StudentProfil },
     ],
   },
 ];
