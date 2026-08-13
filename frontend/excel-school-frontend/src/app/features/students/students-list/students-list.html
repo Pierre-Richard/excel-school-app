@@ -34,12 +34,11 @@
     </div>
     <div class="flex items-center gap-4 mb-4">
       <label for="className" class="font-semibold w-36">Classe</label>
-      <input
-        pInputText
-        id="className"
-        class="flex-auto"
-        autocomplete="off"
-        formControlName="className"
+      <p-select
+        [options]="classesFiltered()"
+        formControlName="classId"
+        optionLabel="fullname"
+        optionValue="id"
       />
     </div>
     <div class="flex items-center gap-4 mb-4">
@@ -62,10 +61,10 @@
   </form>
 </p-dialog>
 <div class="container-student flex flex-wrap gap-3 mb-4 p-4">
-  @for (student of students(); track student.id) {
-    <p-card class="w-5" [header]="student.firstname + ' ' + student.name">
+  @for (student of listeStudentsByClasses(); track student.id) {
+    <p-card class="w-5" [header]="student.firstname + ' ' + student.studentClasse">
       <div class="flex flex-column gap-2">
-        <span><strong>Classe :</strong> {{ student.className }}</span>
+        <span><strong>Classe :</strong> {{ student.classId }}</span>
         <span
           ><strong>Date de naissance :</strong> {{ student.birthDate | date: 'dd/MM/yyyy' }}</span
         >
