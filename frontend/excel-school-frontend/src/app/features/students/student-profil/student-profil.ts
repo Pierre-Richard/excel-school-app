@@ -11,12 +11,4 @@ import { CommonModule } from '@angular/common';
   templateUrl: './student-profil.html',
   styleUrl: './student-profil.scss',
 })
-export class StudentProfil implements OnInit {
-  public studentService = inject(StudentService);
-  public students$!: Observable<Student[]>;
-
-  ngOnInit(): void {
-    this.students$ = this.studentService.getAllStudents();
-    console.log('Liste des Eleves', this.students$);
-  }
-}
+export class StudentProfil {}
