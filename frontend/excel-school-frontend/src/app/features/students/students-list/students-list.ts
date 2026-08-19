@@ -56,7 +56,6 @@ export class StudentsList implements OnInit {
     firstname: ['', Validators.required],
     name: ['', Validators.required],
     studentNumber: [0, Validators.required],
-    className: ['', Validators.required],
     classId: [0, Validators.required],
     parentId: [0, Validators.required],
     birthDate: ['', Validators.required],
