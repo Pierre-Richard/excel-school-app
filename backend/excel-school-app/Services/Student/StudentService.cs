@@ -25,6 +25,7 @@ namespace excel_school_app.Services
             var newStudentDto = new StudentDto
             {
                 Id = cretedStudent.Id,
+                ClassId = cretedStudent.ClassId,            
                 UserId = cretedStudent.UserId,
                 ClassName = cretedStudent.Class?.Name!,
                 ParentName = cretedStudent.Parent?.Name!,
@@ -52,6 +53,7 @@ namespace excel_school_app.Services
                 return new StudentDto
                 {
                     Id = s.Id,
+                    ClassId = s.ClassId,    
                     UserId = s.UserId,
                     ClassName = s.Class?.Name!,
                     ParentName = s.Parent?.Name!,

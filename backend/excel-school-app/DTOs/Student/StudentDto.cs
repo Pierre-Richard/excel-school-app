@@ -5,6 +5,7 @@ namespace excel_school_app.DTOs
     public class StudentDto
     {
           public int Id { get; set; }
+          public int ClassId { get; set; }
           public int UserId { get; set; }
           public string ClassName { get; set; } = string.Empty;
           public string ParentName { get; set; } = string.Empty;

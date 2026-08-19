@@ -1,5 +1,6 @@
 export interface Student {
   id?: number;
+  className?: string;
   userId?: number;
   classId: number;
   parentId: number;
