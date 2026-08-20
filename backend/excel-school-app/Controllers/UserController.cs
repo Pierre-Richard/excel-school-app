@@ -16,25 +16,22 @@ namespace excel_school_app.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("students")]
          
-         public  IActionResult GetUsersByRole([FromQuery] UserRole? role)
+         public  IActionResult GetStudents()
         {
-            if(role is null) return  BadRequest("Le paramètre 'role' est requis.");
+
             try
             {
-                var users = _userService.GetUsersByRole(role.Value);
+                var users = _userService.GetStudents();
                 return Ok(users);
             }   
             
             catch (Exception ex)
             {
-
-        
                 {
                             return BadRequest(ex.Message);
                 }
-        
             }
         }
 

@@ -13,9 +13,9 @@ namespace excel_school_app.Services.Users
         {
             _userRepository = userRepository;
         }
-        public IEnumerable<UserDto> GetUsersByRole(UserRole role)
+        public IEnumerable<UserDto> GetStudents()
         {
-            var users = _userRepository.GetUsersByRole(role).Select(u =>
+            var users = _userRepository.GetUsersByRole(UserRole.Student).Select(u =>
             {
                 return new UserDto
                 {
