@@ -40,6 +40,16 @@
         optionLabel="name"
         optionValue="id"
       />
+      @if (formDialog.controls.classId.invalid && formDialog.controls.classId.touched) {
+        <p-message severity="error">La classe est obligatoire</p-message>
+      }
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="className" class="font-semibold w-36">utilisateur</label>
+      <p-select [options]="users()" formControlName="userId" optionLabel="email" optionValue="id" />
+      @if (formDialog.controls.userId.invalid && formDialog.controls.userId.touched) {
+        <p-message severity="error">L'utilisateur est obligatoire</p-message>
+      }
     </div>
     <div class="flex items-center gap-4 mb-4">
       <label for="parentId" class="font-semibold w-36">Nom du parent</label>
@@ -49,6 +59,9 @@
         optionLabel="fullname"
         optionValue="id"
       />
+      @if (formDialog.controls.parentId.invalid && formDialog.controls.parentId.touched) {
+        <p-message severity="error">Le nom du parent est obligatoire</p-message>
+      }
     </div>
     <div class="flex items-center gap-4 mb-8">
       <label for="birthDate" class="font-semibold w-36">Date de naissance</label>

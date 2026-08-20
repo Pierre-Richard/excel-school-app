@@ -12,7 +12,9 @@ import { Student } from '../../../core/interfaces/student';
 import { ClasseService } from '../../../core/services/classe-service';
 import { ParentService } from '../../../core/services/parent-service';
 import { StudentService } from '../../../core/services/student-service';
-
+import { UserService } from '../../../core/services/user-service';
+import { User } from '../../../core/interfaces/user';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-students-list',
   imports: [
@@ -24,6 +26,7 @@ import { StudentService } from '../../../core/services/student-service';
     ReactiveFormsModule,
     SelectModule,
     FormsModule,
+    MessageModule,
   ],
   templateUrl: './students-list.html',
   styleUrl: './students-list.scss',
@@ -32,6 +35,7 @@ export class StudentsList implements OnInit {
   public studentService = inject(StudentService);
   public parentService = inject(ParentService);
   public classeService = inject(ClasseService);
+  public userService = inject(UserService);
   private fb = inject(FormBuilder);
 
   public students = signal<Student[]>([]);
@@ -40,6 +44,7 @@ export class StudentsList implements OnInit {
   public visible = signal(false);
   public selectedClasse = signal<number>(0);
   public value = signal<number>(0);
+  public users = signal<User[]>([]);
 
   ngOnInit(): void {
     //call api de ma liste de classe à initialisation de mon composant
@@ -48,6 +53,7 @@ export class StudentsList implements OnInit {
     });
     // call api de ma liste des eleves à initialisation de mon composant
     this.studentService.getAllStudents().subscribe((student) => {
+      console.log(student);
       this.students.set(student);
     });
   }
@@ -56,8 +62,9 @@ export class StudentsList implements OnInit {
     firstname: ['', Validators.required],
     name: ['', Validators.required],
     studentNumber: [0, Validators.required],
-    classId: [0, Validators.required],
-    parentId: [0, Validators.required],
+    classId: [0, [Validators.required, Validators.min(1)]],
+    userId: [0, [Validators.required, Validators.min(1)]],
+    parentId: [0, [Validators.required, Validators.min(1)]],
     birthDate: ['', Validators.required],
   });
   public parentFiltered = computed(() => {
@@ -105,6 +112,10 @@ export class StudentsList implements OnInit {
       this.parents.set(parents);
     });
 
+    this.userService.getUserStudent().subscribe((user) => {
+      this.users.set(user);
+    });
+
     this.visible.set(true);
   }
 
@@ -120,6 +131,10 @@ export class StudentsList implements OnInit {
       this.studentService.createStudent(value).subscribe(() => {
         this.visible.set(false);
       });
+    }
+    if (this.formDialog.invalid) {
+      this.formDialog.markAllAsTouched();
+      return;
     }
   }
 
