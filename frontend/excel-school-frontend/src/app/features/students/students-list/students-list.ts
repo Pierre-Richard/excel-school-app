@@ -120,22 +120,15 @@ export class StudentsList implements OnInit {
   }
 
   onSubmit() {
-    if (this.formDialog.valid) {
-      let valueForm = this.formDialog.getRawValue();
-      let value = {
-        ...valueForm,
-        birthDate: new Date(valueForm.birthDate!).toISOString().split('T')[0],
-      };
-      console.log('Reponse', value);
-
-      this.studentService.createStudent(value).subscribe(() => {
-        this.visible.set(false);
-      });
-    }
     if (this.formDialog.invalid) {
       this.formDialog.markAllAsTouched();
       return;
     }
+
+    let valueForm = this.formDialog.getRawValue();
+    this.studentService.createStudent(valueForm).subscribe(() => {
+      this.visible.set(false);
+    });
   }
 
   getSelectedClasse(event: any) {
