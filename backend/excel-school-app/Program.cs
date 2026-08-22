@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddOpenApi();
 
-
+//verrouille tous les endpoints via une FallbackPolicy ?
 builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
