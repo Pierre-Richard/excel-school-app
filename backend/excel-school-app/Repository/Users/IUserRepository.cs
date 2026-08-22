@@ -6,6 +6,6 @@ namespace excel_school_app.Repository.Users
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetUsersByRole(UserRole role);
+        Task<IEnumerable<User>> GetUsersByRole(UserRole role);
     }
 }

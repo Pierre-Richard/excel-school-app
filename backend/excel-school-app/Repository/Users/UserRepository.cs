@@ -14,10 +14,10 @@ namespace excel_school_app.Repository.Users
         {
             _appDbContext = appDbContext;
         }
-        public IEnumerable<User> GetUsersByRole(UserRole role)
+        public async Task<IEnumerable<User>>  GetUsersByRole(UserRole role)
         {
             // la liste filtrer des users qui on le role qu'on lui donnne
-            var users = _appDbContext.User.Where(u => u.Role == role).ToList();
+            var users = await _appDbContext.User.Where(u => u.Role == role).ToListAsync();
 
             return users;
         }

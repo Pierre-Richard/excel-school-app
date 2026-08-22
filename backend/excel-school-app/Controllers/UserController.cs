@@ -18,12 +18,12 @@ namespace excel_school_app.Controllers
 
         [HttpGet("students")]
          
-         public  IActionResult GetStudents()
+         public async  Task<IActionResult> GetStudents()
         {
 
             try
             {
-                var users = _userService.GetStudents();
+                var users = await  _userService.GetStudents();
                 return Ok(users);
             }   
             

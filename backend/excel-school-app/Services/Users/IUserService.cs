@@ -6,7 +6,7 @@ namespace excel_school_app.Services.Users
 {
     public  interface IUserService
     {
-          IEnumerable<UserDto>  GetStudents();
+          Task<IEnumerable<UserDto>>  GetStudents();
       
     }
 }

@@ -13,9 +13,10 @@ namespace excel_school_app.Services.Users
         {
             _userRepository = userRepository;
         }
-        public IEnumerable<UserDto> GetStudents()
+        public async Task<IEnumerable<UserDto>> GetStudents()
         {
-            var users = _userRepository.GetUsersByRole(UserRole.Student).Select(u =>
+            var users = await _userRepository.GetUsersByRole(UserRole.Student);
+            return users.Select(u =>
             {
                 return new UserDto
                 {
@@ -23,7 +24,6 @@ namespace excel_school_app.Services.Users
                     Email = u.Email,
                 };
             });
-            return users;
         }
 
 
