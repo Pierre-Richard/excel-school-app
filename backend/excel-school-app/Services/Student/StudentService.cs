@@ -15,11 +15,11 @@ namespace excel_school_app.Services
         {
             _studentRepository = studentRepository;
         }
-        public StudentDto CreateStudent(CreateStudentDto student)
+        public async Task<StudentDto> CreateStudent(CreateStudentDto student)
         {
 
             //Appeler le repository qui retourner mon entité student
-            var cretedStudent = _studentRepository.CreateStudent(student);
+            var cretedStudent = await _studentRepository.CreateStudent(student);
 
             // convertir mon student en studentDTO
             var newStudentDto = new StudentDto
@@ -38,17 +38,18 @@ namespace excel_school_app.Services
             return newStudentDto;
         }
 
-        public void DeleteStudent(int id)
+        public async Task DeleteStudent(int id)
         {
             //Recuperer le repository
-            _studentRepository.DeleteStudent(id);
+           await  _studentRepository.DeleteStudent(id);
 
         }
 
-        public IEnumerable<StudentDto> GetAllStudents()
+        public async Task<IEnumerable<StudentDto>> GetAllStudents()
         {
             //retourner tous les eleves
-            var students = _studentRepository.GetAllStudents().Select(s =>
+            var students = await _studentRepository.GetAllStudents();
+           return students.Select(s =>
             {
                 return new StudentDto
                 {
@@ -62,16 +63,13 @@ namespace excel_school_app.Services
                     StudentNumber = s.StudentNumber,
                     BirthDate = s.BirthDate,
                 };
-            });
-
-            return students;
-     
+            });   
         }
 
-        public StudentDto GetStudentById(int id)
+        public async Task<StudentDto> GetStudentById(int id)
         {
             //Appeler mon repository qui retourner mon entité Student
-            var student = _studentRepository.GetStudentById(id);
+            var student = await _studentRepository.GetStudentById(id);
 
             //Convertir mon student en studentDTO
             var studentDto = new StudentDto
@@ -89,10 +87,10 @@ namespace excel_school_app.Services
             return studentDto;
         }
 
-        public StudentDto UpdateStudent(int id, UpdateStudentDto student)
+        public async Task<StudentDto> UpdateStudent(int id, UpdateStudentDto student)
         {
             //Recuperer le repository qui va me retourner mon entité Student
-            var newStudent = _studentRepository.UpdateStudent(id, student);
+            var newStudent = await _studentRepository.UpdateStudent(id, student);
 
             //Convertir mon student en StudentDto
             var studentDto = new StudentDto

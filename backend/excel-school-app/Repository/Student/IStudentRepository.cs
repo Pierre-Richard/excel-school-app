@@ -6,11 +6,11 @@ namespace excel_school_app.Repository
 {
     public interface IStudentRepository
     {
-        IEnumerable<Student> GetAllStudents();
-        Student GetStudentById(int id);
-        Student CreateStudent(CreateStudentDto student);
-        Student UpdateStudent(int id,  UpdateStudentDto student);
-        void DeleteStudent(int id);
+        Task<IEnumerable<Student>> GetAllStudents();
+        Task<Student> GetStudentById(int id);
+        Task<Student> CreateStudent(CreateStudentDto student);
+        Task<Student> UpdateStudent(int id,  UpdateStudentDto student);
+        Task DeleteStudent(int id);
         
     }
 }
