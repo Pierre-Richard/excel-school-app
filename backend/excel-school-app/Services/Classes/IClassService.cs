@@ -6,6 +6,6 @@ namespace excel_school_app.Services.Classes
 {
     public interface IClassService
     {
-        IEnumerable<ClassDto>GetAllClasses();
+        Task<IEnumerable<ClassDto>>GetAllClasses();
     }
 }
