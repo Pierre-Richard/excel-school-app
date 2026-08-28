@@ -6,14 +6,13 @@ namespace excel_school_app.Repository
 {
     public interface IGradeRepository
     {
-        IEnumerable<Grade> GetAllGrades();
-        Grade GetGradeById(int id);
-        Grade CreateGrade(CreateGradeDto grade);
-        Grade UpdateGrade(int id, UpdateGradeDto grade);
-        IEnumerable<Grade> GetGradesByStudentId(int studentId);
-        IEnumerable<Grade> GetAverageByStudentId(int studentId);
-        IEnumerable<Grade> GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term);
-        void DeleteGrade(int id);
+        Task<IEnumerable<Grade>> GetAllGrades();
+        Task<Grade> GetGradeById(int id);
+        Task<Grade> CreateGrade(CreateGradeDto grade);
+        Task<Grade> UpdateGrade(int id, UpdateGradeDto grade);
+        Task<IEnumerable<Grade>> GetGradesByStudentId(int studentId);
+        Task<IEnumerable<Grade>> GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term);
+        Task DeleteGrade(int id);
         
     }
 }
