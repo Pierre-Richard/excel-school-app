@@ -14,11 +14,11 @@ namespace excel_school_app.Services.absence
         {
             _absenceRepository = absenceRepository;
         }
-        public AbsenceDto CreateAbsence(CreateAbsenceDto absence)
+        public async Task<AbsenceDto> CreateAbsence(CreateAbsenceDto absence)
         {
-            var absenceDto = _absenceRepository.CreateAbsence(absence);
+            var absenceDto = await _absenceRepository.CreateAbsence(absence);
 
-            var createAbsenceDto = new AbsenceDto
+            var createAbsenceDto =  new AbsenceDto
             {
                 Id = absenceDto.Id,
                 StudentId = absenceDto.StudentId,
@@ -30,26 +30,23 @@ namespace excel_school_app.Services.absence
                 IsFullDay = absenceDto.IsFullDay,
                 CreatedAt = absenceDto.CreatedAt,
             };
-            var countAbsenceUnjustified = _absenceRepository.GetFilteredAbsence(null, absenceDto.StudentId, AbsenceStatus.Unjustified).Count();
-
-            if (countAbsenceUnjustified >= 3)
+            var unjustifiedAbsenceCount = await _absenceRepository.CountUnjustifiedAbsences( absenceDto.StudentId);
+    
+            if (unjustifiedAbsenceCount >= 3)
             {
-                createAbsenceDto.AlertMessage = $"Attention : l'élève a {countAbsenceUnjustified} absences non justifiées !";
-            }
-            Console.WriteLine($"Count: {countAbsenceUnjustified}");
-
-           
+                createAbsenceDto.AlertMessage = $"Attention : l'élève a {unjustifiedAbsenceCount} absences non justifiées !";
+            }           
             return createAbsenceDto;
         }
 
-        public void DeleteAbsence(int id)
+        public async Task DeleteAbsence(int id)
         {
-            _absenceRepository.DeleteAbsence(id);
+           await _absenceRepository.DeleteAbsence(id);
         }
 
-        public AbsenceDto GetAbsenceById(int id)
+        public async Task<AbsenceDto> GetAbsenceById(int id)
         {
-            var absence = _absenceRepository.GetAbsenceById(id);
+            var absence = await _absenceRepository.GetAbsenceById(id);
             var newAbsence = new AbsenceDto
             {
                 Id = absence.Id,
@@ -66,9 +63,10 @@ namespace excel_school_app.Services.absence
             return newAbsence;
         }
 
-        public IEnumerable<AbsenceDto> GetAllAbsence()
+        public async Task<IEnumerable<AbsenceDto>> GetAllAbsence()
         {
-            var absence = _absenceRepository.GetAllAbsence().Select(a =>
+            var absence = await _absenceRepository.GetAllAbsence();
+            return absence.Select(a =>
               {
                   return new AbsenceDto
                   {
@@ -83,13 +81,12 @@ namespace excel_school_app.Services.absence
                         CreatedAt = a.CreatedAt
                   };
               });
-
-            return absence;
         }
 
-        public IEnumerable<AbsenceDto> GetFilteredAbsence(DateOnly? date, int? studentId, AbsenceStatus? status)
+        public async Task<IEnumerable<AbsenceDto>> GetFilteredAbsence(DateOnly? date, int? studentId, AbsenceStatus? status)
         {
-             var filteredListGrades = _absenceRepository.GetFilteredAbsence(date, studentId, status).Select(a =>
+            var filteredListGrades = await _absenceRepository.GetFilteredAbsence(date, studentId, status);
+             return filteredListGrades.Select(a =>
             {
                 return new AbsenceDto
                 {
@@ -104,13 +101,11 @@ namespace excel_school_app.Services.absence
                     CreatedAt = a.CreatedAt
                 };
             });
-
-            return filteredListGrades;
         }
 
-        public AbsenceDto UpdateAbsence(int id, JustifyAbsenceDto absence)
+        public async Task<AbsenceDto> UpdateAbsence(int id, JustifyAbsenceDto absence)
         {
-            var newAbsence = _absenceRepository.UpdateAbsence(id, absence);
+            var newAbsence = await _absenceRepository.UpdateAbsence(id, absence);
 
             var updateAbsence = new AbsenceDto
             {

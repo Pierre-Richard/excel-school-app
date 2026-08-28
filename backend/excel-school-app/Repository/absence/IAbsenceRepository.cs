@@ -6,11 +6,12 @@ namespace excel_school_app.Repository.absence
 {
     public interface IAbsenceRepository
     {
-        IEnumerable<Absence> GetAllAbsence();
-        Absence GetAbsenceById(int id);
-        Absence CreateAbsence(CreateAbsenceDto absence);
-        Absence UpdateAbsence(int id, JustifyAbsenceDto absence);
-        void DeleteAbsence(int id);
-        IEnumerable<Absence> GetFilteredAbsence(DateOnly? date, int? studentId,Enums.AbsenceStatus? status);
+        Task<IEnumerable<Absence>> GetAllAbsence();
+        Task<Absence> GetAbsenceById(int id);
+        Task<Absence> CreateAbsence(CreateAbsenceDto absence);
+        Task<Absence> UpdateAbsence(int id, JustifyAbsenceDto absence);
+        Task DeleteAbsence(int id);
+        Task<IEnumerable<Absence>> GetFilteredAbsence(DateOnly? date, int? studentId, Enums.AbsenceStatus? status);
+         Task<int> CountUnjustifiedAbsences(int studentId);
     }
 }

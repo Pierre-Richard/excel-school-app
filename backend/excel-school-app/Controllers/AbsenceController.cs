@@ -20,11 +20,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllAbsence()
+        public async Task<IActionResult> GetAllAbsence()
         {
             try
             {
-                var absence = _absenceService.GetAllAbsence();
+                var absence = await _absenceService.GetAllAbsence();
                 return Ok(absence);
 
             }
@@ -36,11 +36,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAbsence([FromBody] CreateAbsenceDto absence)
+        public async Task<IActionResult> CreateAbsence([FromBody] CreateAbsenceDto absence)
         {
             try
             {
-                var newAbsence = _absenceService.CreateAbsence(absence);
+                var newAbsence = await _absenceService.CreateAbsence(absence);
                 return Ok(newAbsence);
 
             }
@@ -53,11 +53,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteAbsence(int id)
+        public async Task<IActionResult> DeleteAbsence(int id)
         {
             try
             {
-                _absenceService.DeleteAbsence(id);
+                await _absenceService.DeleteAbsence(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -68,11 +68,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpPut("{id:int}/justify")]
-        public IActionResult UpdateAbsence(int id, [FromBody] JustifyAbsenceDto absence)
+        public async Task<IActionResult> UpdateAbsence(int id, [FromBody] JustifyAbsenceDto absence)
         {
             try
             {
-                var newAbsence = _absenceService.UpdateAbsence(id, absence);
+                var newAbsence = await _absenceService.UpdateAbsence(id, absence);
                 return Ok(newAbsence);
             }
             catch (Exception ex)
@@ -83,11 +83,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetAbsenceById(int id)
+        public async Task<IActionResult> GetAbsenceById(int id)
         {
             try
             {
-                var absence = _absenceService.GetAbsenceById(id);
+                var absence = await _absenceService.GetAbsenceById(id);
                 return Ok(absence);
             }
             catch (Exception ex)
@@ -97,11 +97,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet("filter")]
-         public IActionResult GetFilteredAbsence(DateOnly? date, int? studentId, AbsenceStatus? status)
+         public async Task<IActionResult> GetFilteredAbsence(DateOnly? date, int? studentId, AbsenceStatus? status)
         {
             try
             {
-                var filteredAbsence = _absenceService.GetFilteredAbsence(date,studentId,status);
+                var filteredAbsence = await _absenceService.GetFilteredAbsence(date,studentId,status);
                 return Ok(filteredAbsence);
             }
             catch (Exception ex)
