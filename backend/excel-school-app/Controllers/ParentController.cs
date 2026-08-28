@@ -18,11 +18,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllParents()
+        public async Task<IActionResult> GetAllParents()
         {
             try
             {
-                var parents = _parentService.GetAllParents();
+                var parents = await _parentService.GetAllParents();
                 return Ok(parents);
             }
             catch (Exception ex)

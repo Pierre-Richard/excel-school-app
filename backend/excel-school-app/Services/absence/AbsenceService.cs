@@ -30,7 +30,7 @@ namespace excel_school_app.Services.absence
                 IsFullDay = absenceDto.IsFullDay,
                 CreatedAt = absenceDto.CreatedAt,
             };
-            var unjustifiedAbsenceCount = await _absenceRepository.CountUnjustifiedAbsences( absenceDto.StudentId);
+            var unjustifiedAbsenceCount = await _absenceRepository.CountUnjustifiedAbsences(absenceDto.StudentId);
     
             if (unjustifiedAbsenceCount >= 3)
             {
