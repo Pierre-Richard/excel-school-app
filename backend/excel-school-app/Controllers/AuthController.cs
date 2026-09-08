@@ -25,12 +25,12 @@ namespace excel_school_app.Controllers
         [Route("register")]
         [HttpPost]
 
-        public IActionResult Register([FromBody] RegisterDto user)
+        public async Task<IActionResult> Register([FromBody] RegisterDto user)
 
         {
             try
             {
-                var userRegister = _authService.Register(user);
+                var userRegister = await _authService.Register(user);
                 return Ok(userRegister);
             }
             catch (Exception ex)
@@ -43,11 +43,11 @@ namespace excel_school_app.Controllers
         [Route("login")]
         [HttpPost]
         
-        public IActionResult Login([FromBody] LoginDto user)
+        public async Task<IActionResult> Login([FromBody] LoginDto user)
         {
             try
             {
-                var userLogin = _authService.Login(user);
+                var userLogin = await _authService.Login(user);
                 return Ok(userLogin);
             }
             catch (Exception ex)

@@ -5,6 +5,7 @@ using System.Security.Claims;
 using excel_school_app.Data;
 using excel_school_app.DTOs;
 using excel_school_app.Models;
+using excel_school_app.Repository.Users;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -12,15 +13,16 @@ namespace excel_school_app.Services
 {
     public class AuthService : IAuthService
     {
-        //J'inject AppDbContext dans mon construteur 
 
-        private readonly AppDbContext _appDbContext;
         private readonly IConfiguration _configuration;
 
-        public AuthService(AppDbContext appDbContext, IConfiguration configuration)
+        private readonly IUserRepository _userRepository;
+
+        public AuthService(IUserRepository userRepository ,IConfiguration configuration)
         {
-            _appDbContext = appDbContext;
+            _userRepository = userRepository;
             _configuration = configuration;
+            
         }
 
         private string GenerateToken(User user)
@@ -51,7 +53,7 @@ namespace excel_school_app.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public AuthResponseDto Login(LoginDto user)
+        public async Task<AuthResponseDto> Login(LoginDto user)
 
         {
             //Retrouver l'utilisateur par email done
@@ -61,7 +63,7 @@ namespace excel_school_app.Services
             //Retourner un AuthResponseDto
 
             // retrouver l'utilisateur utilisateur par son email
-            var existantUser = _appDbContext.User.FirstOrDefault(u => u.Email == user.Email);
+            var existantUser = await _userRepository.GetUserByEmail(user.Email);
             //Vérifier que l'utilisateur existe
             if (existantUser == null)
             {
@@ -93,16 +95,14 @@ namespace excel_school_app.Services
             };
 
             return authResponseDto;
-
-            
         }
 
-        public AuthResponseDto Register(RegisterDto user)
+        public async Task<AuthResponseDto> Register(RegisterDto user)
 
 
         {
             // retrouver l'utilisateur utilisateur par son email
-            var existantUser = _appDbContext.User.FirstOrDefault(u => u.Email == user.Email);
+            var existantUser = await _userRepository.GetUserByEmail(user.Email);
             //Vérifier si l'email existe déjà en BDD
             if (existantUser != null)
             {
@@ -121,9 +121,7 @@ namespace excel_school_app.Services
                 Role = user.Role,
             };
 
-            _appDbContext.User.Add(newUser);
-            //Sauvegarder en BDD
-            _appDbContext.SaveChanges();
+            var createUser = await _userRepository.CreateUser(newUser);
 
            //Générer le token JWT
             var generateToken = GenerateToken(newUser); 
@@ -131,11 +129,11 @@ namespace excel_school_app.Services
             //Retourner un AuthResponseDto
             var authResponseDto = new AuthResponseDto
             {
-                Id = newUser.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Role = user.Role,
+                Id = createUser.Id,
+                FirstName = createUser.FirstName,
+                LastName = createUser.LastName,
+                Email = createUser.Email,
+                Role = createUser.Role,
                 Token = generateToken,
             };
 
