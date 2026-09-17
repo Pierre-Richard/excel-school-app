@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using excel_school_app.Data;
 using excel_school_app.DTOs;
+using excel_school_app.GlobalException;
 using excel_school_app.Models;
 using excel_school_app.Repository.Users;
 using Microsoft.IdentityModel.Tokens;
@@ -67,7 +68,7 @@ namespace excel_school_app.Services
             //Vérifier que l'utilisateur existe
             if (existantUser == null)
             {
-                throw new Exception("L'utilisateur n'existe pas");
+               throw new InvalidCredentialsException("L'email n'existe pas");
             }
 
             //Mot de passe provenant de la DB
@@ -78,7 +79,7 @@ namespace excel_school_app.Services
 
             if (verifyPassword != true)
             {
-                throw new Exception("Le password n'existe pas");
+                throw new InvalidCredentialsException("Le password n'existe pas");
             }
 
             var generateToken = GenerateToken(existantUser);
@@ -106,7 +107,7 @@ namespace excel_school_app.Services
             //Vérifier si l'email existe déjà en BDD
             if (existantUser != null)
             {
-                throw new Exception("L'utilisateur existe deja");
+                throw new EmailAlreadyUsedException("Cette email est deja utilisé");
             }
             //Hasher le mot de passe avec BCrypt
             var hashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
