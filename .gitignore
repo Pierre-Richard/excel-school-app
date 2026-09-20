@@ -6,3 +6,10 @@ obj/
 
 # macOS
 .DS_Store
+
+# Build Java / Maven
+target/
+
+# IntelliJ
+.idea/
+*.iml
