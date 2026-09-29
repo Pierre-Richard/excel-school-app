@@ -4,12 +4,11 @@ using excel_school_app.DTOs;
 namespace excel_school_app.Services
 {
     public interface IStudentService
-    {
-        
-        IEnumerable<StudentDto> GetAllStudents();
-        StudentDto GetStudentById(int id);
-        StudentDto CreateStudent(CreateStudentDto student);
-        StudentDto UpdateStudent(int id,  UpdateStudentDto student);
-        void DeleteStudent(int id);
+    { 
+        Task<IEnumerable<StudentDto>> GetAllStudents();
+        Task<StudentDto> GetStudentById(int id);
+        Task<StudentDto> CreateStudent(CreateStudentDto student);
+        Task<StudentDto> UpdateStudent(int id,  UpdateStudentDto student);
+        Task DeleteStudent(int id);
     }
 }

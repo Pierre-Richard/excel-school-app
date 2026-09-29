@@ -20,11 +20,11 @@ namespace excel_school_app.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAllStudents()
+        public async Task<IActionResult> GetAllStudents()
         {
             try
             {
-                var students = _studentService.GetAllStudents();
+                var students = await _studentService.GetAllStudents();
                 return Ok(students);
 
             }
@@ -39,11 +39,11 @@ namespace excel_school_app.Controllers
 
         [HttpPost]
 
-        public IActionResult CreateStudent([FromBody] CreateStudentDto student)
+        public async Task<IActionResult> CreateStudent([FromBody] CreateStudentDto student)
         {
             try
             {
-                var newStudent = _studentService.CreateStudent(student);
+                var newStudent = await _studentService.CreateStudent(student);
                 return Ok(newStudent);
 
             }
@@ -55,11 +55,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteStudent( int id)
+        public async Task<IActionResult> DeleteStudent( int id)
         {
             try
             {
-                _studentService.DeleteStudent(id);
+                await _studentService.DeleteStudent(id);
                 return Ok();
                 
             }
@@ -70,12 +70,12 @@ namespace excel_school_app.Controllers
             }
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateStudent(int id,[FromBody]UpdateStudentDto student)
+        public async Task<IActionResult> UpdateStudent(int id,[FromBody]UpdateStudentDto student)
         {
             try
             {
                 // recuperer ma methode UpdateStudent de mon service
-                var newStudent = _studentService.UpdateStudent(id, student);    
+                var newStudent = await _studentService.UpdateStudent(id, student);    
                 //retourner mon StudentDto
                 return Ok(newStudent);
                 
@@ -87,12 +87,12 @@ namespace excel_school_app.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetStudentById(int id)
+        public async Task<IActionResult> GetStudentById(int id)
         {
             try
             {
                 // recuperer ma methode GetStudentById de mon service
-                var newStudent = _studentService.GetStudentById(id);    
+                var newStudent = await _studentService.GetStudentById(id);    
                 //retourner mon StudentDto
                 return Ok(newStudent);
                 

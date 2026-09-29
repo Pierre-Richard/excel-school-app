@@ -6,13 +6,13 @@ namespace excel_school_app.Services.Grade
     public interface IGradeService
     {
         
-        IEnumerable<GradeDto> GetAllGrades();
-        GradeDto GetGradeById(int id);
-        GradeDto CreateGrade(CreateGradeDto grade);
-        GradeDto UpdateGrade(int id, UpdateGradeDto grade);
-        IEnumerable<GradeDto> GetGradesByStudentId(int studentId);
-        AverageDto GetAverageByStudentId(int studentId);
-        IEnumerable<GradeDto> GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term);
-        void DeleteGrade(int id);
+        Task<IEnumerable<GradeDto>> GetAllGrades();
+        Task<GradeDto> GetGradeById(int id);
+        Task<GradeDto> CreateGrade(CreateGradeDto grade);
+        Task<GradeDto> UpdateGrade(int id, UpdateGradeDto grade);
+        Task<IEnumerable<GradeDto>> GetGradesByStudentId(int studentId);
+        Task<AverageDto> GetAverageByStudentId(int studentId);
+        Task<IEnumerable<GradeDto>> GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term);
+        Task DeleteGrade(int id);
     }
 }

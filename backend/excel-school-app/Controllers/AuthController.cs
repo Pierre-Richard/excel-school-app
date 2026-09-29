@@ -1,5 +1,6 @@
 using System;
 using excel_school_app.DTOs;
+using excel_school_app.GlobalException;
 using excel_school_app.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,41 +26,23 @@ namespace excel_school_app.Controllers
         [Route("register")]
         [HttpPost]
 
-        public IActionResult Register([FromBody] RegisterDto user)
+        public async Task<IActionResult> Register([FromBody] RegisterDto user)
 
-        {
-            try
-            {
-                var userRegister = _authService.Register(user);
-                return Ok(userRegister);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+        { 
+                var userRegister = await _authService.Register(user);
+                return Ok(userRegister);  
         }
 
         [AllowAnonymous]
         [Route("login")]
         [HttpPost]
         
-        public IActionResult Login([FromBody] LoginDto user)
+        public async Task<IActionResult> Login([FromBody] LoginDto user)
         {
-            try
-            {
-                var userLogin = _authService.Login(user);
-                return Ok(userLogin);
-            }
-            catch (Exception ex)
-            {
 
-                if (ex.Message.Contains("Le password n'existe pas"))
-                {
-                    return Unauthorized();
-                }
-                return BadRequest(ex.Message);
-            }
-              
+            var userLogin = await _authService.Login(user);
+        
+            return Ok(userLogin);  
         }
         
     }

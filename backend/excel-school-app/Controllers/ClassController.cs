@@ -16,11 +16,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllClasses()
+        public async Task<IActionResult> GetAllClasses()
         {
             try
             {
-                var classes = _classService.GetAllClasses();
+                var classes = await _classService.GetAllClasses();
                 return Ok(classes);
             }
             catch (Exception ex)

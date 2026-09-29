@@ -4,6 +4,7 @@ using excel_school_app.Data;
 using excel_school_app.DTOs.absence;
 using excel_school_app.Enums;
 using excel_school_app.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace excel_school_app.Repository.absence
 {
@@ -15,7 +16,7 @@ namespace excel_school_app.Repository.absence
         {
             _appDbContext = appDbContext;
         }
-        public Absence CreateAbsence(CreateAbsenceDto absence)
+        public async Task<Absence> CreateAbsence(CreateAbsenceDto absence)
         {
             // créer un objet Absence
             var newAbsence = new Absence
@@ -32,15 +33,15 @@ namespace excel_school_app.Repository.absence
             //ajouter ma Absence dans ma DB
             _appDbContext.Absence.Add(newAbsence);
             // sauvegarder la Absence 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
             // retourner la Absence
             return newAbsence;
         }
 
-        public void DeleteAbsence(int id)
+        public async Task DeleteAbsence(int id)
         {
             //trouver l'absence à supprimé
-            var absence = _appDbContext.Absence.Find(id);
+            var absence = await _appDbContext.Absence.FindAsync(id);
             if (absence == null)
             {
                 throw new Exception("Cette absence n'existe pas");
@@ -50,13 +51,13 @@ namespace excel_school_app.Repository.absence
 
             //sauvegarder le changement 
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Absence GetAbsenceById(int id)
+        public async Task<Absence> GetAbsenceById(int id)
         {
               // recuperer la note via à son id
-            var absence = _appDbContext.Absence.Find(id);
+            var absence = await _appDbContext.Absence.FindAsync(id);
             //Si la grade n'existe pas retourner ce message d'erreur
             if (absence == null)
             {
@@ -65,15 +66,15 @@ namespace excel_school_app.Repository.absence
             return absence;
         }
 
-        public IEnumerable<Absence> GetAllAbsence()
+        public async Task<IEnumerable<Absence>> GetAllAbsence()
         {
             //recuperer la liste des absences
-            var listeOfAbsence = _appDbContext.Absence.ToList();
+            var listeOfAbsence = await _appDbContext.Absence.ToListAsync();
             // retourner la liste
             return listeOfAbsence;
         }
 
-        public IEnumerable<Absence> GetFilteredAbsence(DateOnly? date, int? studentId, Enums.AbsenceStatus? status)
+        public async Task<IEnumerable<Absence>> GetFilteredAbsence(DateOnly? date, int? studentId, Enums.AbsenceStatus? status)
         {
             var query = _appDbContext.Absence.AsQueryable();
             // Filtrer par date si le paramètre est fourni
@@ -86,13 +87,13 @@ namespace excel_school_app.Repository.absence
             if (status.HasValue)
                 query = query.Where(g => g.Status == status);
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
-        public Absence UpdateAbsence(int id, JustifyAbsenceDto absence)
+        public async Task<Absence> UpdateAbsence(int id, JustifyAbsenceDto absence)
         {
             //Recuperer mon absence
-            var newAbsence = _appDbContext.Absence.Find(id);
+            var newAbsence = await _appDbContext.Absence.FindAsync(id);
             // Si l'absence n'existe pas retourner un message d'erreur
             if (newAbsence == null)
             {
@@ -103,11 +104,18 @@ namespace excel_school_app.Repository.absence
             newAbsence.Status = absence.Status;
 
             //sauvegarde
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
             //retourner la mise à jour
 
             return newAbsence;
+        }
+
+       public async  Task<int> CountUnjustifiedAbsences(int studentId)
+        {
+            return await _appDbContext.Absence
+                    .Where(a => a.StudentId == studentId && a.Status == AbsenceStatus.Unjustified)
+                    .CountAsync();
         }
     }
 }

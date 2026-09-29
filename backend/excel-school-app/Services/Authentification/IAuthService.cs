@@ -5,7 +5,7 @@ namespace excel_school_app.Services
 {
     public interface IAuthService
     {
-        AuthResponseDto Register(RegisterDto user);
-        AuthResponseDto Login(LoginDto user);
+        Task<AuthResponseDto> Register(RegisterDto user);
+        Task<AuthResponseDto> Login(LoginDto user);
     }
 }

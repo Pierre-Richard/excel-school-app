@@ -15,9 +15,9 @@ namespace excel_school_app.Services.Grade
             _gradeRepository = gradeRepository;
         }
 
-        public GradeDto CreateGrade(CreateGradeDto grade)
+        public async Task<GradeDto> CreateGrade(CreateGradeDto grade)
         {
-            var gradeDto = _gradeRepository.CreateGrade(grade);
+            var gradeDto = await _gradeRepository.CreateGrade(grade);
 
             var createGradeDto = new GradeDto
             {
@@ -34,14 +34,15 @@ namespace excel_school_app.Services.Grade
             return createGradeDto;
         }
 
-        public void DeleteGrade(int id)
+        public async Task DeleteGrade(int id)
         {
-            _gradeRepository.DeleteGrade(id);
+           await _gradeRepository.DeleteGrade(id);
         }
 
-        public IEnumerable<GradeDto> GetAllGrades()
+        public async Task<IEnumerable<GradeDto>> GetAllGrades()
         {
-            var grades = _gradeRepository.GetAllGrades().Select(grade =>
+            var grades = await _gradeRepository.GetAllGrades();
+            return grades.Select(grade =>
               {
                   return new GradeDto
                   {
@@ -55,13 +56,22 @@ namespace excel_school_app.Services.Grade
                       Term = grade.Term
                   };
               });
-
-            return grades;
         }
 
-        public AverageDto GetAverageByStudentId(int studentId)
+        public async Task<AverageDto> GetAverageByStudentId(int studentId)
         {
-            var listGradeOfStudent = _gradeRepository.GetAverageByStudentId(studentId);
+            var listGradeOfStudent = await _gradeRepository.GetGradesByStudentId(studentId);
+            //// Pas encore de note : la moyenne vaut null, pas 0.
+            // 0/20 est une vraie note (l'eleve a compose et rate) ; l'absence de note n'en est pas une.
+            if(!listGradeOfStudent.Any())
+            {
+                return new AverageDto
+                {
+                    StudentId = studentId,
+                    GeneralAverage = null,
+                    AverageBySubject =  new List<SubjectAverageDto>(),
+                };
+            }
             var average = listGradeOfStudent.Average(v => v.Value);
 
             var averageBySubject = listGradeOfStudent.GroupBy(v => v.Subject).Select(a =>
@@ -84,9 +94,10 @@ namespace excel_school_app.Services.Grade
             
         }
 
-        public IEnumerable<GradeDto> GetFilteredGrades(int? studentId, Subject? subject, Term? term)
+        public async Task<IEnumerable<GradeDto>> GetFilteredGrades(int? studentId, Subject? subject, Term? term)
         {
-            var filteredListGrades = _gradeRepository.GetFilteredGrades(studentId, subject, term).Select(g =>
+            var filteredListGrades = await _gradeRepository.GetFilteredGrades(studentId, subject, term);
+           return filteredListGrades.Select(g =>
             {
                 return new GradeDto
                 {
@@ -100,14 +111,12 @@ namespace excel_school_app.Services.Grade
                     Term = g.Term
                 };
             });
-
-            return filteredListGrades;
             
         }
 
-        public GradeDto GetGradeById(int id)
+        public async Task<GradeDto> GetGradeById(int id)
         {
-            var grade = _gradeRepository.GetGradeById(id);
+            var grade = await _gradeRepository.GetGradeById(id);
             var newGrade = new GradeDto
             {
                 Id = grade.Id,
@@ -123,9 +132,10 @@ namespace excel_school_app.Services.Grade
             return newGrade;
         }
 
-        public IEnumerable<GradeDto> GetGradesByStudentId(int studentId)
+        public async Task<IEnumerable<GradeDto>> GetGradesByStudentId(int studentId)
         {
-            var listeGradeStudent = _gradeRepository.GetGradesByStudentId(studentId).Select(g =>
+            var listeGradeStudent = await _gradeRepository.GetGradesByStudentId(studentId);
+            return  listeGradeStudent.Select(g =>
             {
                 return new GradeDto
                 {
@@ -139,14 +149,12 @@ namespace excel_school_app.Services.Grade
                     Term = g.Term
                 };
             });
-
-            return listeGradeStudent;
           
         }
 
-        public GradeDto UpdateGrade(int id, UpdateGradeDto grade)
+        public async Task<GradeDto> UpdateGrade(int id, UpdateGradeDto grade)
         {
-            var newGrade = _gradeRepository.UpdateGrade(id, grade);
+            var newGrade = await _gradeRepository.UpdateGrade(id, grade);
 
             var updateGrade = new GradeDto
             {

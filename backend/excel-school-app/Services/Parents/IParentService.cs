@@ -5,6 +5,6 @@ namespace excel_school_app.Services.Parents
 {
     public interface IParentService
     {
-        IEnumerable<ParentDto> GetAllParents();
+        Task<IEnumerable<ParentDto>> GetAllParents();
     }
 }

@@ -17,7 +17,7 @@ namespace excel_school_app.Repository
         }
       
       
-        public Student CreateStudent(CreateStudentDto student)
+        public async Task<Student> CreateStudent(CreateStudentDto student)
         {
             var createNewStudentDto = new Student
             {
@@ -33,15 +33,15 @@ namespace excel_school_app.Repository
              _appDbContext.Student
              .Add(createNewStudentDto);
             // sauvegarder l'eleve en base de donnée
-            _appDbContext.SaveChanges();
+             await _appDbContext.SaveChangesAsync();
             // retourner un eleve
             return createNewStudentDto;
         }
 
-        public void DeleteStudent(int id)
+        public async Task DeleteStudent(int id)
         {
             // recuperer un eleve 
-            var student = _appDbContext.Student.Find(id);
+            var student = await _appDbContext.Student.FindAsync(id);
             //si l'eleve n'existe pas retourner une erreur
             if (student == null)
             {
@@ -50,24 +50,24 @@ namespace excel_school_app.Repository
             // supprimer l'utilisateur
             _appDbContext.Student.Remove(student);
             // sauvegarde les changements en DB
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<Student> GetAllStudents()
+        public async Task<IEnumerable<Student>> GetAllStudents()
         {
             //recuperer tous les eleves 
-            var students = _appDbContext.Student
+            var students = await _appDbContext.Student
             .Include(s => s.Class) // Quand tu récupères les Students, charge aussi les données liées.
             .Include(s => s.Parent)
-            .ToList();
+            .ToListAsync();
             // retourner tous les eleves
             return students;
         }
 
-        public Student GetStudentById(int id)
+        public async Task<Student> GetStudentById(int id)
         {
             // recuperer un eleve 
-            var student = _appDbContext.Student.Find(id);
+            var student = await _appDbContext.Student.FindAsync(id);
 
             // si student n'existe pas retourne une erreur
             if (student == null)
@@ -80,10 +80,10 @@ namespace excel_school_app.Repository
          
         }
 
-        public Student UpdateStudent(int id, UpdateStudentDto student)
+        public async Task<Student> UpdateStudent(int id, UpdateStudentDto student)
         {
             //trouver l'elever via son id
-            var studentFound = _appDbContext.Student.Find(id);
+            var studentFound = await _appDbContext.Student.FindAsync(id);
 
             //si l'eleve n'existe pas retourner une erreur
             if(studentFound == null)
@@ -98,12 +98,9 @@ namespace excel_school_app.Repository
             studentFound.Firstname = student.Firstname;
             studentFound.StudentNumber = student.StudentNumber;
             studentFound.BirthDate = student.BirthDate;
-
-            //Ajouter la mise à jour au Student
-            _appDbContext.Student.Update(studentFound);
-
+            
             //Sauvegarder la mise à jour 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
             // retourner un eleve 
             return studentFound;

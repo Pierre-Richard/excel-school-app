@@ -21,11 +21,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllGrades()
+        public async Task<IActionResult> GetAllGrades()
         {
             try
             {
-                var grades = _gradeService.GetAllGrades();
+                var grades = await _gradeService.GetAllGrades();
                 return Ok(grades);
 
             }
@@ -39,11 +39,11 @@ namespace excel_school_app.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateGrade([FromBody] CreateGradeDto grade)
+        public async Task<IActionResult> CreateGrade([FromBody] CreateGradeDto grade)
         {
             try
             {
-                var newGrade = _gradeService.CreateGrade(grade);
+                var newGrade = await _gradeService.CreateGrade(grade);
                 return Ok(newGrade);
 
             }
@@ -56,11 +56,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteGrade(int id)
+        public async Task<IActionResult> DeleteGrade(int id)
         {
             try
             {
-                _gradeService.DeleteGrade(id);
+               await  _gradeService.DeleteGrade(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -71,11 +71,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateGrade(int id, [FromBody] UpdateGradeDto grade)
+        public async Task<IActionResult> UpdateGrade(int id, [FromBody] UpdateGradeDto grade)
         {
             try
             {
-                var newGrade = _gradeService.UpdateGrade(id, grade);
+                var newGrade = await _gradeService.UpdateGrade(id, grade);
                 return Ok(newGrade);
             }
             catch (Exception ex)
@@ -86,11 +86,11 @@ namespace excel_school_app.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetGradeById(int id)
+        public async Task<IActionResult> GetGradeById(int id)
         {
             try
             {
-                var grade = _gradeService.GetGradeById(id);
+                var grade = await _gradeService.GetGradeById(id);
                 return Ok(grade);
             }
             catch (Exception ex)
@@ -100,11 +100,11 @@ namespace excel_school_app.Controllers
         }
 
        [HttpGet("student/{studentId}")]
-         public IActionResult GetGradesByStudentId(int studentId)
+         public async Task<IActionResult> GetGradesByStudentId(int studentId)
         {
             try
             {
-                var listGradeStudent = _gradeService.GetGradesByStudentId(studentId);
+                var listGradeStudent = await _gradeService.GetGradesByStudentId(studentId);
                 return Ok(listGradeStudent);
             }
             catch (Exception ex)
@@ -114,11 +114,11 @@ namespace excel_school_app.Controllers
             }
         }
        [HttpGet("student/{studentId}/average")]
-         public IActionResult GetAverageByStudentId(int studentId)
+         public async Task<IActionResult> GetAverageByStudentId(int studentId)
         {
             try
             {
-                var listAverageStudent = _gradeService.GetAverageByStudentId(studentId);
+                var listAverageStudent = await _gradeService.GetAverageByStudentId(studentId);
                 return Ok(listAverageStudent);
             }
             catch (Exception ex)
@@ -128,11 +128,11 @@ namespace excel_school_app.Controllers
             }
         }
        [HttpGet("filter")]
-         public IActionResult GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term)
+         public async Task<IActionResult> GetFilteredGrades(int? studentId, Enums.Subject? subject, Enums.Term? term)
         {
             try
             {
-                var filteredGradesStudent = _gradeService.GetFilteredGrades(studentId,subject,term);
+                var filteredGradesStudent = await _gradeService.GetFilteredGrades(studentId,subject,term);
                 return Ok(filteredGradesStudent);
             }
             catch (Exception ex)

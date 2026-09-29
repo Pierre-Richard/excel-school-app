@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using excel_school_app.Data;
 using excel_school_app.DTOs.Grade;
 using excel_school_app.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace excel_school_app.Repository
 {
@@ -14,7 +15,7 @@ namespace excel_school_app.Repository
         {
             _appDbContext = appDbContext;
         }
-        public Grade CreateGrade(CreateGradeDto grade)
+        public async Task<Grade> CreateGrade(CreateGradeDto grade)
         {
             // créer un objet grade
             var newGrade = new Grade
@@ -31,15 +32,15 @@ namespace excel_school_app.Repository
             //ajouter ma note dans ma DB
             _appDbContext.Grade.Add(newGrade);
             // sauvegarder la note 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
             // retourner la note
             return newGrade;
         }
 
-        public void DeleteGrade(int id)
+        public async Task DeleteGrade(int id)
         {
             //Trouver la node que via son id
-            var grade = _appDbContext.Grade.Find(id);
+            var grade = await _appDbContext.Grade.FindAsync(id);
             //Si la note n'existe pas retourner ce message d'erreur
             if (grade == null)
             {
@@ -48,28 +49,21 @@ namespace excel_school_app.Repository
             //supprimer la note 
             _appDbContext.Grade.Remove(grade);
             //sauvegarde la modification
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
         }
 
-        public IEnumerable<Grade> GetAllGrades()
+        public async Task<IEnumerable<Grade>> GetAllGrades()
         {
             // recuperer tous les notes
-            return _appDbContext.Grade.ToList();
+            return await _appDbContext.Grade.ToListAsync();
         }
 
-        public IEnumerable<Grade> GetAverageByStudentId(int studentId)
-        {
-            //Récupérer toutes les notes de l'élève
-            var listGradeStudent = _appDbContext.Grade.Where(s => s.StudentId == studentId).ToList();
-            // Retourner la liste des notes de l'élèves
-            return listGradeStudent;
-        }
 
-        public Grade GetGradeById(int id)
+        public async Task<Grade> GetGradeById(int id)
         {
             // recuperer la note via à son id
-            var grade = _appDbContext.Grade.Find(id);
+            var grade = await _appDbContext.Grade.FindAsync(id);
             //Si la grade n'existe pas retourner ce message d'erreur
             if (grade == null)
             {
@@ -78,19 +72,19 @@ namespace excel_school_app.Repository
             return grade;
         }
 
-        public IEnumerable<Grade> GetGradesByStudentId(int studentId)
+        public async Task<IEnumerable<Grade>> GetGradesByStudentId(int studentId)
         {
             // trpouver la Liste des notes des eleves
-            var listGradeStudent = _appDbContext.Grade.Where(s => s.StudentId == studentId).ToList();
+            var listGradeStudent = await _appDbContext.Grade.Where(s => s.StudentId == studentId).ToListAsync();
             //retourner la liste 
             return listGradeStudent;
 
         }
 
-        public Grade UpdateGrade(int id, UpdateGradeDto grade)
+        public async Task<Grade> UpdateGrade(int id, UpdateGradeDto grade)
         {
             // recuperer la note via son id
-            var newGrade = _appDbContext.Grade.Find(id);
+            var newGrade = await _appDbContext.Grade.FindAsync(id);
             //Si la grade n'existe pas retourner ce message d'erreur
             if (newGrade == null)
             {
@@ -105,14 +99,14 @@ namespace excel_school_app.Repository
             newGrade.Term = grade.Term;
 
             // sauvegarder dans la DB
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
             //retourner la mise à jour
             return newGrade;
         }
 
-        public IEnumerable<Grade> GetFilteredGrades(int? studentId,Enums.Subject? subject,Enums.Term? term)
+        public async Task<IEnumerable<Grade>> GetFilteredGrades(int? studentId,Enums.Subject? subject,Enums.Term? term)
         {
-            var query = _appDbContext.Grade.AsQueryable();
+            var query =  _appDbContext.Grade.AsQueryable();
             // Filtrer par élève si le paramètre est fourni
             if (studentId.HasValue)
                 query = query.Where(g => g.StudentId == studentId.Value);
@@ -123,7 +117,7 @@ namespace excel_school_app.Repository
             if (term.HasValue)
                 query = query.Where(g => g.Term == term);
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
     }
     

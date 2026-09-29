@@ -1,5 +1,6 @@
 using System.Text;
 using excel_school_app.Data;
+using excel_school_app.GlobalException;
 using excel_school_app.Repository;
 using excel_school_app.Repository.absence;
 using excel_school_app.Repository.Classes;
@@ -78,7 +79,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // il y a des controllers dans cette application, enregistre-les comme services
 builder.Services.AddControllers();
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // builder.Build() construit l'application
 var app = builder.Build();
@@ -90,7 +92,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi().AllowAnonymous();
 }
-
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 app.UseAuthentication();
