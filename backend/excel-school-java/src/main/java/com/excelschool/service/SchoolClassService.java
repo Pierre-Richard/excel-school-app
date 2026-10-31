@@ -17,20 +17,15 @@ public class SchoolClassService {
     public SchoolClassDto getById(Integer id){
         //1-à partir du repository je recois le carton
         var foundClass = repository.findById(id);
-        //2-est-ce que ce carton contient une class SI NON LANCER exception
-        if(foundClass.isEmpty()){
-            throw new SchoolClassNotFoundException(id);
-        }
-        //3- si oui ouvrir le carton
-        var classe  = foundClass.get();
 
-        //4-mapper l'oject de la DB avec l'objet DTO
+        var classe  =  foundClass.orElseThrow(() -> new SchoolClassNotFoundException(id));
+        //2-mapper l'oject de la DB avec l'objet DTO
         var newClassDto = new SchoolClassDto(
-             classe.getId(),
+                classe.getId(),
                 classe.getName(),
                 classe.getLevel()
         );
-        //5retourner le DTO
+        //3 retourner le DTO
         return newClassDto;
     }
 }
